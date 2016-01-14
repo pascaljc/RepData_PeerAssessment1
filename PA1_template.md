@@ -1,12 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-#Reproducible Research PA1
-#Loading and preprocessing the data
-#For this assignment, the first step is to load the data file "activity.csv" by read.csv
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 setwd("C:/Users/pjc/Documents/Reproducible")
 activity <- read.csv("./activity.csv", header=T, sep=",",na.strings="NA")
