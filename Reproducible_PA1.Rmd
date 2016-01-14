@@ -100,17 +100,17 @@ is_weekday <- function(d) {
 wd <- weekdays(d)
 ifelse (wd == "Saturday" | wd == "Sunday", "weekend", "weekday")
 }
-activity_wk <- sapply(activity_imputed$date, is_weekday)
-activity_imputed$wk <- as.factor(activity_wk)
+wks<- sapply(activity_imputed$date, is_weekday)
+activity_imputed$wk <- as.factor(wks)
 head(activity_imputed)
 ```
 
 Five-minute interval (x-axis) and the average number of steps taken, averaged across all ## weekday days or weekend days (y-axis).
 ```{r echo=FALSE}
-activity_wk <- aggregate(steps ~ activity_wk+interval, data=activity_imputed, FUN=mean)
+activity_wk <- aggregate(steps ~ wk+interval, data=activity_imputed, FUN=mean)
 
 library(lattice)
-xyplot(steps ~ interval | factor(activity_wk),
+xyplot(steps ~ interval | factor(wk),
 layout = c(1, 2),
 xlab="Interval",
 ylab="Number of steps",
