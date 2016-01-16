@@ -5,12 +5,9 @@ date: "Wednesday, January 13, 2016"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+Loading and Processing the Data
 ```{r}
-setwd("C:/Users/pjc/Documents/Reproducible")
+# First set the working directory 
 activity <- read.csv("./activity.csv", header=T, sep=",",na.strings="NA")
 head(activity)
 ```
@@ -29,7 +26,7 @@ d_steps_count <- tapply(clean_activity$steps, clean_activity$date, sum, na.rm=TR
 ```
 remove NA from count
 
-```{r echo=FALSE}
+```{r}
 d_steps_count <- d_steps_count[!is.na(d_steps_count)]
 ## Fig. 1 
 hist(x=d_steps_count,breaks=20,xlab="Daily total steps",ylab="Frequency",col="red",
@@ -46,7 +43,7 @@ median(d_steps_count)
 What is the average daily activity pattern?
 Create the time series of daily activity pattern
 
-```{r echo=FALSE}
+```{r}
 avg_interval <- tapply(clean_activity$steps, clean_activity$interval, mean, na.rm=TRUE, simplify=T)
 activity_int <- data.frame(interval=as.integer(names(avg_interval)), avg=avg_interval)
 with(activity_int,plot(interval,avg,type="l",
@@ -74,7 +71,7 @@ interval_avg <- tapply(clean_activity$steps, clean_activity$interval, mean, na.r
 activity_imputed$steps[x_na] <- interval_avg[as.character(activity_imputed$interval[x_na])]
 ```
 Second representation of the data based on imputation of the mean.
-```{r echo=FALSE}
+```{r}
 d_steps_count2 <- tapply(activity_imputed$steps, activity_imputed$date, sum, na.rm=TRUE, simplify=T)
 hist(x=d_steps_count2,
      col="red",
@@ -106,7 +103,7 @@ head(activity_imputed)
 ```
 
 Five-minute interval (x-axis) and the average number of steps taken, averaged across all ## weekday days or weekend days (y-axis).
-```{r echo=FALSE}
+```{r}
 activity_wk <- aggregate(steps ~ wk+interval, data=activity_imputed, FUN=mean)
 
 library(lattice)
